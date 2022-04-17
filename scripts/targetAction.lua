@@ -120,7 +120,9 @@ function targetAllWithinDistance(node, nDistance, sFaction, bIgnoreVisible)
 				local targetCT = CombatManager.getCTFromToken(token);
 
 				if sFaction == "all" or ActorManager.getFaction(targetCT) == sFaction then
-					table.insert(finaltargets, targetCT);
+					if bIgnoreVisible or token.isVisible() then
+						table.insert(finaltargets, targetCT);
+					end
 				end
 			end
 		end
