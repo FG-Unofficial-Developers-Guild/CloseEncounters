@@ -50,6 +50,23 @@ function toggleTargeting(rActor, nDistance, sFaction)
 	end
 end
 
+function getActionText(faction, size)
+	local sFaction = "enemies";
+	if faction == "friend" then
+		sFaction = "allies";
+	elseif faction == "all" then
+		sFaction = "everyone"
+	end
+
+	local sRange = "squares";
+	if size == 1 then
+		sRange = "square";
+	end
+
+
+	return "Target " .. sFaction  .. " within " .. size .. " " .. sRange;
+end
+
 ------------------ TARGET ACTION ---------------------------
 function sendSelectTargetsMsg(rSourceNode, nDistance, sFaction)
 	local msgOOB = {};

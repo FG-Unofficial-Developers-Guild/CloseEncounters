@@ -19,21 +19,7 @@ function getPCPowerTargetActionText(nodeAbility)
 
 	local size = DB.getValue(nodeAbility, "burstsize", 0);
 	local faction = DB.getValue(nodeAbility, "targetfaction", "");
-	local sFaction = "enemies";
-	if faction == "friend" then
-		sFaction = "allies";
-	elseif faction == "all" then
-		sFaction = "everyone"
-	end
-
-	local sRange = "squares";
-	if size == 1 then
-		sRange = "square";
-	end
-
-	sTarget = "Target " .. sFaction  .. " within " .. size .. " " .. sRange;
-
-	return sTarget;
+	return CloseEncounters.getActionText(faction, size)
 end
 
 function getPCPowerAction(nodeAction, sSubRoll)

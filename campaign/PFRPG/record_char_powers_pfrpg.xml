@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="spell_action_targetbutton">
+		<button_spellaction name="targetbutton">
+			<anchored position="insidetopleft" offset="2,2" />
+			<icon normal="button_targeting" pressed="button_targeting_down" />
+		</button_spellaction>
+	</template>
+	<template name="spell_action_targetlabel">
+		<label name="targetlabel">
+			<anchored to="targetbutton" position="righthigh" offset="3,0" width="60" />
+			<static textres="power_label_target_burstsize" />
+		</label>
+	</template>
+	<template name="spell_action_burstsize">
+		<basicnumber name="burstsize">
+			<anchored to="targetlabel" position="righthigh" offset="10,0" width="30" />
+		</basicnumber>
+	</template>
+	<template name="spell_action_factionlabel">
+		<label name="factionlabel">
+			<anchored to="burstsize" position="righthigh" offset="10,0" width="45" />
+			<static textres="power_label_target_faction" />
+		</label>
+	</template>
+	<template name="spell_action_targetfaction">
+		<button_stringcycler name="targetfaction">
+			<anchored to="factionlabel" position="righthigh" offset="5,0" width="60" />
+			<parameters>
+				<labelsres>faction_friend|faction_all</labelsres>
+				<values>friend|all</values>
+				<defaultlabelres>faction_foe</defaultlabelres>
+			</parameters>
+		</button_stringcycler>
+	</template>
+
+	<windowclass name="spell_item" merge="join" ruleset="PFRPG">
+		<script file="campaign/3.5e/scripts/spell.lua" />
+	</windowclass>
+
+	<windowclass name="spell_action" merge="join" ruleset="PFRPG">
+		<script file="campaign/3.5e/scripts/spell_action.lua" />
+	</windowclass>
+
+	<windowclass name="spell_action_mini" merge="join" ruleset="PFRPG">
+		<script file="campaign/3.5e/scripts/spell_action_mini.lua" />
+	</windowclass>
+</root>

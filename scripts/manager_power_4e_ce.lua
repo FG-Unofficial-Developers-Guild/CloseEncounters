@@ -20,20 +20,8 @@ function getPowerAbilityString(sType, nodeAbility)
 	if sType == "target" then
 		local size = DB.getValue(nodeAbility, "burstsize", 0);
 		local faction = DB.getValue(nodeAbility, "targetfaction", "");
-		local sFaction = "enemies";
-		if faction == "friend" then
-			sFaction = "allies";
-		elseif faction == "all" then
-			sFaction = "everyone"
-		end
-
-		local sRange = "squares";
-		if size == 1 then
-			sRange = "square";
-		end
-
-
-		s = "Target " .. sFaction  .. " within " .. size .. " " .. sRange;
+		
+		s = CloseEncounters.getActionText(faction, size)
 	end
 
 	return s;
