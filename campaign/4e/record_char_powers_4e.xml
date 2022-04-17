@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="char_power" merge="join" ruleset="4E">
+		<script file="campaign/4e/scripts/char_power.lua" />
+	</windowclass>
+
+	<windowclass name="char_powerability" merge="join" ruleset="4E">
+		<script file="campaign/4e/scripts/char_powerability.lua" />
+		<sheetdata>
+			<!-- Targeting -->
+			<button_charpowerability name="targetbutton">
+				<anchored position="insidetopleft" offset="2,2" />
+				<icon normal="button_targeting" pressed="button_targeting_down" />
+			</button_charpowerability>
+			<label name="targetlabel">
+				<anchored to="targetbutton" position="righthigh" offset="5,0" width="60" />
+				<static textres="power_label_target_burstsize" />
+			</label>
+			<basicnumber name="burstsize">
+				<anchored to="targetlabel" position="righthigh" offset="10,0" width="30" />
+			</basicnumber>
+			<label name="factionlabel">
+				<anchored to="burstsize" position="righthigh" offset="10,0" width="45" />
+				<static textres="power_label_target_faction" />
+			</label>
+			<button_stringcycler name="targetfaction">
+				<anchored to="factionlabel" position="righthigh" offset="5,0" width="60" />
+				<parameters>
+					<labelsres>faction_friend|faction_all</labelsres>
+					<values>friend|all</values>
+					<defaultlabelres>faction_foe</defaultlabelres>
+				</parameters>
+			</button_stringcycler>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charmini_powerability" merge="join" ruleset="4E">
+		<script file="campaign/4e/scripts/charmini_powerability.lua" />
+	</windowclass>
+
+	<windowclass name="char_power_header" merge="join" ruleset="4E">
+		<sheetdata>
+			<windowlist name="abilitiesmini">
+				<anchored width="100">
+					<top offset="2" />
+					<right />
+				</anchored>
+				<class>charmini_powerability</class>
+				<noscroll />
+				<readonly />
+				<columns width="25" fillwidth="true" />
+				<script file="campaign/4e/scripts/charmini_powerabilitylist.lua" />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_power_header" merge="join" ruleset="4E">
+		<sheetdata>
+			<windowlist name="abilitiesmini">
+				<anchored width="100">
+					<top offset="2" />
+					<right />
+				</anchored>
+				<class>charmini_powerability</class>
+				<noscroll />
+				<readonly />
+				<columns width="25" fillwidth="true" />
+				<script file="campaign/4e/scripts/charmini_powerabilitylist.lua" />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charmini_power_header" merge="join" ruleset="4E">
+		<sheetdata>
+			<windowlist name="abilities">
+				<anchored width="100">
+					<top offset="2"/>
+					<right />
+				</anchored>
+				<class>charmini_powerability</class>
+				<noscroll />
+				<readonly />
+				<columns width="25" fillwidth="true" />
+				<script file="campaign/4e/scripts/charmini_powerabilitylist.lua" />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+</root>
