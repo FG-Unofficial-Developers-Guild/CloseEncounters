@@ -2,26 +2,25 @@
 -- Please see the license.html file included with this distribution for 
 -- attribution and copyright information.
 --
-
 local fUpdateDisplay;
 local fUpdateViews;
 
 function onInit()
     fUpdateDisplay = super.updateDisplay;
-	super.updateDisplay = updateDisplay;
+    super.updateDisplay = updateDisplay;
 
     fUpdateViews = super.updateViews;
     super.updateViews = updateViews;
 
-	if super and super.onInit then
-		super.onInit();
-	end
+    if super and super.onInit then
+        super.onInit();
+    end    
 end
 
 -- when onInit runs sType might be empty
 -- so we attach handlers onFirstLayout instead.
 function onFirstLayout()
-	local nodeChar = DB.getChild(getDatabaseNode(), ".....");
+	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 	if sType == "target" then
 		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
@@ -52,22 +51,19 @@ end
 
 function updateDisplay()
     fUpdateDisplay();
-	local sType = DB.getValue(getDatabaseNode(), "type", "");
-	if sType == "target" then
-		button.setIcons("button_targeting", "button_targeting_down");
-	end
+
+    local sType = DB.getValue(getDatabaseNode(), "type", "");
+    if sType == "target" then
+        button.setIcons("button_targeting", "button_targeting_down");
+    end
 end
 
 function updateViews()
-	fUpdateViews();
-	
-	local sType = DB.getValue(getDatabaseNode(), "type", "");
-	if sType == "target" then
-		onTargetingChanged();
-	end
-end
-
-function onTargetingChanged()
-	local s = PowerManager.getPCPowerTargetActionText(getDatabaseNode());
-	button.setTooltipText(s);
+    local sType = DB.getValue(getDatabaseNode(), "type", "");
+    if sType == "target" then
+        local node = getDatabaseNode();
+        local size = DB.getValue(node, "burstsize", 0);
+        local faction = DB.getValue(node, "targetfaction", "");
+        button.setTooltipText(CloseEncounters.getActionText(faction, size));
+    end
 end

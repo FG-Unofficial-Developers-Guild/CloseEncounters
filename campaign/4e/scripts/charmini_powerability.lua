@@ -11,10 +11,46 @@ function onInit()
 
 	super.setAbility = setAbility;
 	super.action = action;
+
+	if super and super.onInit then
+		super.onInit();
+	end
+end
+
+-- abilitynode and abilitytype nodes don't have values when this is called from
+-- onInit, so we have ot run it onFirstLayout instead.
+function onFirstLayout()
+	local nodeAbility = DB.findNode(abilitynode.getValue());
+	local nodeChar = DB.getChild(nodeAbility, ".....");
+	if abilitytype.getValue() == "target" then
+		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
+		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onDelete", onStoredTargetsRemoved)
+
+		if nodeChar.getChild("storedtargets") then
+			button.setIcons("button_clear", "button_clear_down");
+		end
+	end
+end
+
+function onClose()
+	local nodeAbility = DB.findNode(abilitynode.getValue());
+	local nodeChar = DB.getChild(nodeAbility, ".....");
+	if abilitytype.getValue() == "target" then
+		DB.removeHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
+		DB.removeHandler(DB.getPath(nodeChar, "storedtargets"), "onDelete", onStoredTargetsRemoved)
+	end
+end
+
+function onStoredTargetsCreated(node)
+	button.setIcons("button_clear", "button_clear_down");
+end
+
+function onStoredTargetsRemoved(node)
+	button.setIcons("button_targeting", "button_targeting_down");
 end
 
 function setAbility(sType, nodeAbility, sTooltip)
-	if sType == "target" then
+	if sType == "target" then	
 		button.setIcons("button_targeting", "button_targeting_down");
 	end
 	

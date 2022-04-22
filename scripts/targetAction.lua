@@ -13,13 +13,35 @@ function onInit()
 	CombatManager.setCustomTurnEnd(onTurnEnd);
 end
 
+-- Handle DB watchers for stored targets
+function addDbHandlers(charnode, callback)
+	if charnode and callback then
+		DB.addHandler(DB.getPath(charnode, "storedtargets"), "onUpdate", callback)
+		return true;
+	end
+
+	return false;
+end
+
+function removeDbHandlers(charnode, callback)
+	if charnode and callback then
+		DB.removeHandler(DB.getPath(charnode, "storedtargets"), "onUpdate", callback)
+		return true;
+	end
+
+	return false;
+end
+
 -- Automatically revert to stored targets on turn end
 function onTurnEnd(nodeCT)
 	if not nodeCT then
 		return;
 	end
 
-	local stored = nodeCT.getChild("storedtargets");
+	local rActor = ActorManager.resolveActor(nodeCT)
+	local rSourceNode = DB.findNode(rActor.sCreatureNode)
+
+	local stored = rSourceNode.getChild("storedtargets");
 	if not stored then
 		return;
 	end
@@ -28,9 +50,6 @@ function onTurnEnd(nodeCT)
 		return;
 	end
 
-	local rActor = ActorManager.resolveActor(nodeCT)
-	local rSourceNode = DB.findNode(rActor.sCreatureNode)
-
 	CloseEncounters.clearAndRestore(rSourceNode);
 end
 
@@ -38,12 +57,13 @@ function toggleTargeting(rActor, nDistance, sFaction)
 	if not rActor then
 		return;
 	end
-	local nodeCT = DB.findNode(rActor.sCTNode);
-	if not nodeCT then
+	
+	local node = DB.findNode(rActor.sCreatureNode);
+	if not node then
 		return;
 	end	
 
-	if nodeCT.getChild("storedtargets") then
+	if node.getChild("storedtargets") then
 		CloseEncounters.sendRestoreTargetsMsg(rActor.sCreatureNode);
 	else
 		CloseEncounters.sendSelectTargetsMsg(rActor.sCreatureNode, nDistance, sFaction);
@@ -113,13 +133,15 @@ function storeExistingTargets(node)
 		return;
 	end
 	
-
 	sourcepath = nodeCT.getPath() .. "." .. "targets";
+	destinationpath = node.getPath() .. "." .. "storedtargets";
+
 	if not DB.findNode(sourcepath) then
-		return;
+		-- If targets doesn't exist, create an empty node
+		nodeCT.createChild("targets");
 	end
 
-	destinationpath = nodeCT.getPath() .. "." .. "storedtargets";
+	-- Store targets to the character sheet
 	DB.copyNode(sourcepath, destinationpath);
 end
 
@@ -195,7 +217,7 @@ function restoreExistingTargets(node)
 		return;
 	end
 
-	local stored = nodeCT.getChild("storedtargets");
+	local stored = node.getChild("storedtargets");
 	if not stored then
 		return;
 	end

@@ -17,6 +17,38 @@ function onInit()
     end
 end
 
+-- when onInit runs sType might be empty
+-- so we attach handlers onFirstLayout instead.
+function onFirstLayout()
+	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
+	local sType = DB.getValue(getDatabaseNode(), "type", "");
+	if sType == "target" then
+		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
+		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onDelete", onStoredTargetsRemoved)
+
+		if nodeChar.getChild("storedtargets") then
+			button.setIcons("button_clear", "button_clear_down");
+		end
+	end
+end
+
+function onClose()
+	local nodeChar = DB.getChild(getDatabaseNode(), ".....");
+	local sType = DB.getValue(getDatabaseNode(), "type", "");
+	if sType == "target" then
+		DB.removeHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
+		DB.removeHandler(DB.getPath(nodeChar, "storedtargets"), "onDelete", onStoredTargetsRemoved)
+	end
+end
+
+function onStoredTargetsCreated(node)
+	button.setIcons("button_clear", "button_clear_down");
+end
+
+function onStoredTargetsRemoved(node)
+	button.setIcons("button_targeting", "button_targeting_down");
+end
+
 function updateDisplay()
     fUpdateDisplay();
 

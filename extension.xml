@@ -18,20 +18,28 @@
 		<ruleset>
 			<name>PFRPG</name>
 		</ruleset>
+		<ruleset>
+			<name>PFRPG2</name>
+		</ruleset>
+		<ruleset>
+			<name>SFRPG</name>
+		</ruleset>
 	</properties>
 	<base>
 		<icon name="CloseEncounters" file="CloseEncounters.png" />
 
 		<script name="Options_CE" file="scripts/data_options_CE.lua" />
-		<script name="SpellManager3.5E_CE" file="scripts/manager_spell_3.5e_ce.lua" ruleset="3.5E" />
+		<script name="SpellManager3.5E_CE" file="scripts/manager_spell_3.5e_ce.lua" ruleset="3.5E|PFRPG|PFRPG2|SFRPG" />
 		<script name="PowerManager4E_CE" file="scripts/manager_power_4e_ce.lua" ruleset="4E" />
 		<script name="PowerManager5E_CE" file="scripts/manager_power_5e_ce.lua" ruleset="5E" />
 		<script name="CloseEncounters" file="scripts/targetAction.lua" />
 
-		<includefile source="campaign/PFRPG/record_char_powers_pfrpg.xml" />
+		<!-- <includefile source="campaign/PFRPG/record_char_powers_pfrpg.xml" /> -->
 		<includefile source="campaign/3.5e/record_char_powers_3.5e.xml" />
 		<includefile source="campaign/4e/record_char_powers_4e.xml" />
 		<includefile source="campaign/5e/record_char_powers_5e.xml" />
+		<includefile source="campaign/PFRPG2/record_char_powers_pfrpg2.xml" />
+		<includefile source="campaign/SFRPG/record_char_powers_sfrpg.xml" />
 
 		<string name="option_header_ce">Extension: Close Encounters</string>
 		<string name="option_label_CE_RTET">Restore targets at end of turn</string>

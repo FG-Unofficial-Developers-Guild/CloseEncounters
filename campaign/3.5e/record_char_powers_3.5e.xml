@@ -40,15 +40,15 @@
 		</button_stringcycler>
 	</template>
 
-	<windowclass name="spell_item" merge="join" ruleset="3.5E">
+	<windowclass name="spell_item" merge="join" ruleset="3.5E|PFRPG">
 		<script file="campaign/3.5e/scripts/spell.lua" />
 	</windowclass>
 
-	<windowclass name="spell_action" merge="join" ruleset="3.5E">
+	<windowclass name="spell_action" merge="join" ruleset="3.5E|PFRPG">
 		<script file="campaign/3.5e/scripts/spell_action.lua" />
 	</windowclass>
 
-	<windowclass name="spell_action_mini" merge="join" ruleset="3.5E">
+	<windowclass name="spell_action_mini" merge="join" ruleset="3.5E|PFRPG">
 		<script file="campaign/3.5e/scripts/spell_action_mini.lua" />
 	</windowclass>
 </root>

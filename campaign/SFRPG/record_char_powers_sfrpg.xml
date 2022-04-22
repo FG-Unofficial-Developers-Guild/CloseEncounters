@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+  <windowclass name="spell_item" merge="join" ruleset="SFRPG">
+		<script file="campaign/SFRPG/scripts/spell.lua" />
+	</windowclass>
+
+  <windowclass name="spell_action" merge="join" ruleset="SFRPG">
+		<script file="campaign/SFRPG/scripts/spell_action.lua" />
+	</windowclass>
+
+  <windowclass name="spell_action_mini" merge="join" ruleset="SFRPG">
+		<script file="campaign/SFRPG/scripts/spell_action_mini.lua" />
+	</windowclass>
+</root>
