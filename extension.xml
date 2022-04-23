@@ -41,6 +41,8 @@
 		<includefile source="campaign/PFRPG2/record_char_powers_pfrpg2.xml" />
 		<includefile source="campaign/SFRPG/record_char_powers_sfrpg.xml" />
 
+		<includefile source="campaign/common.xml"/>
+
 		<string name="option_header_ce">Extension: Close Encounters</string>
 		<string name="option_label_CE_RTET">Restore targets at end of turn</string>
 		<string name="option_val_yes">Yes</string>

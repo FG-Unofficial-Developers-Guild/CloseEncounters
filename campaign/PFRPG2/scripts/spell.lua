@@ -16,7 +16,7 @@ function onInit()
     end
 
     if not windowlist.isReadOnly() then
-        registerMenuItem(Interface.getString("menu_poweraddtarget"), "pointer_square", 3, 6);
+        registerMenuItem(Interface.getString("menu_poweraddtarget"), "pointer_square", 3, 1);
     end
 end
 

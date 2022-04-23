@@ -37,6 +37,10 @@
 					<defaultlabelres>faction_foe</defaultlabelres>
 				</parameters>
 			</button_stringcycler>
+
+			<list_storedtargets name="storedtargets">
+				<anchored to="targetfaction" position="righthigh" offset="5,-2" />
+			</list_storedtargets>
 		</sheetdata>
 	</windowclass>
 

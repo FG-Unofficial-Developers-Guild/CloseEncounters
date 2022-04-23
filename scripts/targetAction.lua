@@ -13,25 +13,6 @@ function onInit()
 	CombatManager.setCustomTurnEnd(onTurnEnd);
 end
 
--- Handle DB watchers for stored targets
-function addDbHandlers(charnode, callback)
-	if charnode and callback then
-		DB.addHandler(DB.getPath(charnode, "storedtargets"), "onUpdate", callback)
-		return true;
-	end
-
-	return false;
-end
-
-function removeDbHandlers(charnode, callback)
-	if charnode and callback then
-		DB.removeHandler(DB.getPath(charnode, "storedtargets"), "onUpdate", callback)
-		return true;
-	end
-
-	return false;
-end
-
 -- Automatically revert to stored targets on turn end
 function onTurnEnd(nodeCT)
 	if not nodeCT then
@@ -63,7 +44,9 @@ function toggleTargeting(rActor, nDistance, sFaction)
 		return;
 	end	
 
-	if node.getChild("storedtargets") then
+	local stored = node.getChild("hasStoredTargets");
+
+	if stored then
 		CloseEncounters.sendRestoreTargetsMsg(rActor.sCreatureNode);
 	else
 		CloseEncounters.sendSelectTargetsMsg(rActor.sCreatureNode, nDistance, sFaction);
@@ -87,6 +70,25 @@ function getActionText(faction, size)
 	return "Target " .. sFaction  .. " within " .. size .. " " .. sRange;
 end
 
+------------------ HANDLERS ---------------------------
+function addDbHandlers(charnode, createdCallback, deletedCallback)
+	DB.addHandler(DB.getPath(charnode, "hasStoredTargets"), "onAdd", createdCallback)
+	DB.addHandler(DB.getPath(charnode, "hasStoredTargets"), "onDelete", deletedCallback)
+end
+
+function removeDbHandlers(charnode, createdCallback, deletedCallback)
+	DB.removeHandler(DB.getPath(charnode, "hasStoredTargets"), "onAdd", createdCallback)
+	DB.removeHandler(DB.getPath(charnode, "hasStoredTargets"), "onDelete", deletedCallback)
+end
+
+function updateTargetIcon(charnode, button)
+	if charnode.getChild("hasStoredTargets") then
+		button.setIcons("button_clear", "button_clear_down");
+	else
+		button.setIcons("button_targeting", "button_targeting_down");
+	end
+end
+
 ------------------ TARGET ACTION ---------------------------
 function sendSelectTargetsMsg(rSourceNode, nDistance, sFaction)
 	local msgOOB = {};
@@ -108,7 +110,6 @@ function handleSelectTargets(msgOOB)
 	local sFaction = msgOOB.sFaction or "";
 
 	storeAndTarget(node, nDistance, sFaction);
-	
 end
 
 function storeAndTarget(node, nDistance, sFaction)
@@ -143,6 +144,9 @@ function storeExistingTargets(node)
 
 	-- Store targets to the character sheet
 	DB.copyNode(sourcepath, destinationpath);
+
+	-- Create the flag element
+	stored = node.createChild("hasStoredTargets");
 end
 
 function targetAllWithinDistance(node, nDistance, sFaction, bIgnoreVisible)
@@ -230,10 +234,15 @@ function restoreExistingTargets(node)
 			if targetNode then
 				TargetingManager.addCTTarget(nodeCT, targetNode);
 			end
+			target.delete();
 		end
 	end
 
-	stored.delete();
+	-- Clear the flag element
+	local flag = node.getChild("hasStoredTargets");
+	if flag then
+		flag.delete();
+	end
 end
 
 ------------------ DEBUG ---------------------------

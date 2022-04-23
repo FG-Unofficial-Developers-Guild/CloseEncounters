@@ -18,6 +18,31 @@ function onInit()
     end
 end
 
+function onFirstLayout()
+	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
+	local sType = DB.getValue(getDatabaseNode(), "type", "");
+	if sType == "target" then
+		CloseEncounters.addDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
+		CloseEncounters.updateTargetIcon(nodeChar, targetbutton)
+	end
+end
+
+function onClose()
+	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
+	local sType = DB.getValue(getDatabaseNode(), "type", "");
+	if sType == "target" then
+		CloseEncounters.removeDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
+	end
+end
+
+function onStoredTargetsCreated(node)
+	targetbutton.setIcons("button_clear", "button_clear_down");
+end
+
+function onStoredTargetsRemoved(node)
+	targetbutton.setIcons("button_targeting", "button_targeting_down");
+end
+
 function createDisplay(sType)
     fCreateDisplay(sType);
 
@@ -27,6 +52,7 @@ function createDisplay(sType)
         createControl("spell_action_burstsize", "burstsize");
         createControl("spell_action_factionlabel", "factionlabel");
         createControl("spell_action_targetfaction", "targetfaction");
+        createControl("list_storedtargets", "storedtargets");
     end
 end
 

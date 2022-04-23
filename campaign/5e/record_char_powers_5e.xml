@@ -41,6 +41,8 @@
 					<defaultlabelres>faction_foe</defaultlabelres>
 				</parameters>
 			</button_stringcycler>
+
+			<list_storedtargets name="storedtargets" />
 		</sheetdata>
 	</windowclass>
 </root>

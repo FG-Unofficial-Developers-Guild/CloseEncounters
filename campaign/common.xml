@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <template name="list_storedtargets" ruleset="4E|5E">
+        <windowlist name="storedtargets">
+			<anchored to="targetfaction" position="righthigh" offset="5,-2">
+				<right parent="" anchor="right" offset="-10" />
+			</anchored>
+            <class>token_storedtarget</class>
+			<datasource>.....storedtargets</datasource>
+            <columns width="28" fillwidth="true" />
+			<skipempty />
+			<noscroll />
+        </windowlist>
+    </template>
+	<template name="list_storedtargets" ruleset="3.5E|PFRPG|PFRPG2|SFRPG">
+        <windowlist name="storedtargets">
+			<anchored to="targetfaction" position="righthigh" offset="5,-2">
+				<right parent="" anchor="right" offset="-10" />
+			</anchored>
+            <class>token_storedtarget</class>
+			<datasource>.........storedtargets</datasource>
+            <columns width="28" fillwidth="true" />
+			<skipempty />
+			<noscroll />
+        </windowlist>
+    </template>
+    <windowclass name="token_storedtarget">
+		<margins control="0,0,2,2" />
+		<script>
+			function onInit()
+				DB.addHandler(DB.getPath(getDatabaseNode(), "noderef"), "onUpdate", onRefChanged)
+				onRefChanged();
+			end
+			function onClose()
+				DB.removeHandler(DB.getPath(getDatabaseNode(), "noderef"), "onUpdate", onRefChanged)
+			end
+
+			function onRefChanged()
+				local sPrototype = "";
+				local sTooltip = "";
+
+				local sCTNode = DB.getValue(getDatabaseNode(), "noderef", "");
+				if sCTNode ~= "" then
+					local nodeCT = DB.findNode(sCTNode);
+					sPrototype = DB.getValue(nodeCT, "token", "");
+					sTooltip = ActorManager.getDisplayName(nodeCT);
+				end
+				
+				token.setPrototype(sPrototype);
+				token.setTooltipText(sTooltip);
+			end
+		</script>
+		<sheetdata>
+			<tokencontrol name="token">
+				<bounds>2,2,24,24</bounds>
+				<empty>token_empty</empty>
+				<tooltip nodelay="true" />
+				<disable/>
+				<readonly />
+			</tokencontrol>
+		</sheetdata>
+	</windowclass>
+</root>

@@ -14,7 +14,7 @@ function onInit()
 		super.onInit();
 	end
 
-	registerMenuItem(Interface.getString("menu_poweraddtarget"), "pointer_square", 2, 5);
+	registerMenuItem(Interface.getString("menu_poweraddtarget"), "pointer_square", 2, 1);
 end
 
 function onMenuSelection(selection, subselection)

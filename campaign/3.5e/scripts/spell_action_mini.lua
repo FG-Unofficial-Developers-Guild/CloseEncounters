@@ -23,21 +23,16 @@ function onFirstLayout()
 	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 	if sType == "target" then
-		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
-		DB.addHandler(DB.getPath(nodeChar, "storedtargets"), "onDelete", onStoredTargetsRemoved)
-
-		if nodeChar.getChild("storedtargets") then
-			button.setIcons("button_clear", "button_clear_down");
-		end
+		CloseEncounters.addDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
+		CloseEncounters.updateTargetIcon(nodeChar, button)
 	end
 end
 
 function onClose()
-	local nodeChar = DB.getChild(getDatabaseNode(), ".....");
+	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 	if sType == "target" then
-		DB.removeHandler(DB.getPath(nodeChar, "storedtargets"), "onAdd", onStoredTargetsCreated)
-		DB.removeHandler(DB.getPath(nodeChar, "storedtargets"), "onDelete", onStoredTargetsRemoved)
+		CloseEncounters.removeDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
 	end
 end
 
