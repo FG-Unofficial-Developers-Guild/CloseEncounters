@@ -20,7 +20,7 @@ end
 function onMenuSelection(selection, subselection)
 	fOnMenuSelection(selection, subselection);
 	if selection == 2 then
-		if subselection == 5 then
+		if subselection == 1 then
 			local wnd = abilities.createWindow();
 			if wnd then
 				DB.setValue(wnd.getDatabaseNode(), "type", "string", "target");

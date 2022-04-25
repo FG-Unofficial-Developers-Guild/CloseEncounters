@@ -20,7 +20,7 @@ end
 function onMenuSelection(selection, subselection)
 	fOnMenuSelection(selection, subselection);
 	if selection == 3 then
-		if subselection == 6 then
+		if subselection == 1 then
 			super.createAction("target");
             activatedetail.setValue(1);
 		end
