@@ -156,17 +156,33 @@ function targetAllWithinDistance(node, nDistance, sFaction, bIgnoreVisible)
 
 	if nodeCT then
 		local tokenCT = CombatManager.getTokenFromCT(nodeCT);
-		if tokenCT then
+		local vImage, window, bIsOpen = ImageManager.getImageControl(tokenCT, true)
+
+		if tokenCT and vImage then
 			local targets = Token.getTokensWithinDistance(tokenCT, nDistance);
 
-			for _,token in ipairs(targets) do
+			-- Select the token that is performing this action
+			local selectedTokens = vImage.getSelectedTokens()
+			vImage.clearSelectedTokens();
+			vImage.selectToken(tokenCT, true);			
+
+			-- Target all relevant tokens
+			for index,token in ipairs(targets) do
 				local targetCT = CombatManager.getCTFromToken(token);
 
 				if sFaction == "all" or ActorManager.getFaction(targetCT) == sFaction then
-					if bIgnoreVisible or token.isVisible() then
+					local rTarget = ActorManager.resolveActor(targetCT);
+					local bIsVisible = token.isVisible();
+					if bIgnoreVisible or bIsVisible then
 						table.insert(finaltargets, targetCT);
 					end
 				end
+			end
+
+			-- Set selected token back to what was originally selected
+			vImage.clearSelectedTokens();
+			for index,token in ipairs(selectedTokens) do
+				vImage.selectToken(token, true);
 			end
 		end
 	end
