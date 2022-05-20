@@ -54,6 +54,8 @@ function updateDisplay()
 end
 
 function updateViews()
+	fUpdateViews();
+
     local sType = DB.getValue(getDatabaseNode(), "type", "");
     if sType == "target" then
         local node = getDatabaseNode();
