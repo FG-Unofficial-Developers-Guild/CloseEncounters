@@ -28,29 +28,17 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 		return;
 	end
 
-	-- If nodeAction has action children then it is two levels higher then the usual action record.  This occurs when the spell header applyalleffects button is pressed.
-	-- Get the first cast action node as a placeholder.
-	if DB.getChild(nodeAction,"actions") then
-		local nodeActions = DB.getChildren(nodeAction,"actions");
-		for _, action in pairs(DB.getChildren(nodeAction,"actions")) do
-			if DB.getValue(action, "type", "") == "cast" then
-				nodeAction = action;
-				break;
-			end
-		end		
-	end
-
 	local rActor = ActorManager.resolveActor(nodeAction.getChild("........."));
-	if not rActor then
-		return;
+
+	if rActor then
+		local rAction = getSpellAction(rActor, nodeAction, sSubRoll);
+    	if rAction.type == "target" then
+        	CloseEncounters.toggleTargeting(rActor, rAction.nSize, rAction.sFaction);
+			return true;
+		end
 	end
 
-    local rAction = getSpellAction(rActor, nodeAction, sSubRoll);
-    if rAction.type == "target" then
-        CloseEncounters.toggleTargeting(rActor, rAction.nSize, rAction.sFaction);
-    else
-        fOnSpellAction(draginfo, nodeAction, sSubroll);
-    end
+	fOnSpellAction(draginfo, nodeAction, sSubRoll);
 end
 
 function getSpellAction(rActor, nodeAction, sSubRoll)
@@ -73,6 +61,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 
         return rAction;
     else
-        return fGetSpellAction(rActor, nodeAction, sSubRoll)
+        local rAction = fGetSpellAction(rActor, nodeAction, sSubRoll)
+		return rAction;
     end
 end
