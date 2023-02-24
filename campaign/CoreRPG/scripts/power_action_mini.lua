@@ -2,12 +2,15 @@
 -- Please see the license.html file included with this distribution for 
 -- attribution and copyright information.
 --
+local fOnDataChanged = nil;
 
 function onInit()
+	fOnDataChanged = super.onDataChanged;
+	super.onDataChanged = onDataChanged;
+
 	if super and super.onInit then
 		super.onInit();
 	end
-	DB.addHandler(getDatabaseNode(), "onChildUpdate", self.onTargetingChanged);
 end
 
 -- when onInit runs sType might be empty
@@ -18,18 +21,22 @@ function onFirstLayout()
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 
 	if sType == "target" then
+		-- Add handlers for updating the icon when stored targets exist
 		CloseEncounters.addDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
 		CloseEncounters.updateTargetIcon(nodeChar, button)
 	end
 end
 
 function onClose()
+	if super and super.onClose then
+		super.onClose();
+	end
+
 	local nodeChar = DB.getChild(getDatabaseNode(), ".....");
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 
 	if sType == "target" then
 		CloseEncounters.removeDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
-		DB.removeHandler(getDatabaseNode(), "onChildUpdate", self.onTargetingChanged);
 	end
 end
 
@@ -43,8 +50,7 @@ function onStoredTargetsRemoved(node)
 	button.setIcons("button_targeting", "button_targeting_down");
 end
 
-
-function onTargetingChanged()
-	local s = PowerManager.getPCPowerTargetActionText(getDatabaseNode());
-	button.setTooltipText(s);
+function onDataChanged()
+	Debug.chat('onDataChanged()');
+	fOnDataChanged();
 end

@@ -9,8 +9,9 @@ function onInit()
 		fnGetButtonIcons = getActionButtonIcons,
 		fnGetText = getActionText,
 		fnGetTooltip = getActionTooltip,
-		fnPerform = CloseEncounters.performAction,
+		fnPerform = CloseEncounters.performAction, -- I don't understand why this function isn't getting called
 	};
+
 	PowerActionManagerCore.registerActionType("target", tTargetActionHandlers);
 end
 
