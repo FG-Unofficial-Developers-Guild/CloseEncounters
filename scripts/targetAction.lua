@@ -53,6 +53,34 @@ function toggleTargeting(rActor, nDistance, sFaction)
 	end
 end
 
+------------------ HANDLERS ---------------------------
+function addDbHandlers(charnode, createdCallback, deletedCallback)
+	DB.addHandler(DB.getPath(charnode, "hasStoredTargets"), "onAdd", createdCallback)
+	DB.addHandler(DB.getPath(charnode, "hasStoredTargets"), "onDelete", deletedCallback)
+end
+
+function removeDbHandlers(charnode, createdCallback, deletedCallback)
+	DB.removeHandler(DB.getPath(charnode, "hasStoredTargets"), "onAdd", createdCallback)
+	DB.removeHandler(DB.getPath(charnode, "hasStoredTargets"), "onDelete", deletedCallback)
+end
+
+function updateTargetIcon(charnode, button)
+	if DB.getChild(charnode, "hasStoredTargets") then
+		button.setIcons("button_clear", "button_clear_down");
+	else
+		button.setIcons("button_targeting", "button_targeting_down");
+	end
+end
+
+------------------ POWER MANAGER ---------------------------
+function performAction(node, tData)
+	Debug.chat('performAction()', tData);
+	local size = DB.getValue(node, "burstsize", 0);
+	local faction = DB.getValue(node, "targetfaction", "");
+	CloseEncounters.toggleTargeting(rActor, size, faction);
+	return true;
+end
+
 function getActionText(faction, size)
 	local sFaction = "enemies";
 	if faction == "friend" then
@@ -68,25 +96,6 @@ function getActionText(faction, size)
 
 
 	return "Target " .. sFaction  .. " within " .. size .. " " .. sRange;
-end
-
------------------- HANDLERS ---------------------------
-function addDbHandlers(charnode, createdCallback, deletedCallback)
-	DB.addHandler(DB.getPath(charnode, "hasStoredTargets"), "onAdd", createdCallback)
-	DB.addHandler(DB.getPath(charnode, "hasStoredTargets"), "onDelete", deletedCallback)
-end
-
-function removeDbHandlers(charnode, createdCallback, deletedCallback)
-	DB.removeHandler(DB.getPath(charnode, "hasStoredTargets"), "onAdd", createdCallback)
-	DB.removeHandler(DB.getPath(charnode, "hasStoredTargets"), "onDelete", deletedCallback)
-end
-
-function updateTargetIcon(charnode, button)
-	if charnode.getChild("hasStoredTargets") then
-		button.setIcons("button_clear", "button_clear_down");
-	else
-		button.setIcons("button_targeting", "button_targeting_down");
-	end
 end
 
 ------------------ TARGET ACTION ---------------------------
@@ -134,19 +143,19 @@ function storeExistingTargets(node)
 		return;
 	end
 	
-	sourcepath = nodeCT.getPath() .. "." .. "targets";
-	destinationpath = node.getPath() .. "." .. "storedtargets";
+	sourcepath = DB.getPath(nodeCT, "targets");
+	destinationpath = DB.getPath(nodeCT, "storedtargets");
 
 	if not DB.findNode(sourcepath) then
 		-- If targets doesn't exist, create an empty node
-		nodeCT.createChild("targets");
+		DB.createChild(nodeCT, "targets");
 	end
 
 	-- Store targets to the character sheet
 	DB.copyNode(sourcepath, destinationpath);
 
 	-- Create the flag element
-	stored = node.createChild("hasStoredTargets");
+	DB.createChild("hasStoredTargets");
 end
 
 function targetAllWithinDistance(node, nDistance, sFaction, bIgnoreVisible)
@@ -228,36 +237,39 @@ function clearAndRestore(node)
 end
 
 function restoreExistingTargets(node)
+	Debug.chat('restoreExistingTargets()', node);
 	if not node then
 		return;
 	end
 
 	local nodeCT = CombatManager.getCTFromNode(node);
+	Debug.chat('nodeCT', nodeCT);
 	if not nodeCT then
 		return;
 	end
 
-	local stored = node.getChild("storedtargets");
+	local stored = DB.getChild(node, "storedtargets");
+	Debug.chat('stored', stored);
 	if not stored then
 		return;
 	end
 
-	local targetnodes = stored.getChildren();
-	for _,target in pairs(targetnodes) do
+	for _,target in ipairs(DB.getChildList(stored)) do
 		local noderef = DB.getValue(target, "noderef", "");
 		if noderef ~= "" then
 			local targetNode = DB.findNode(noderef);
 			if targetNode then
 				TargetingManager.addCTTarget(nodeCT, targetNode);
 			end
-			target.delete();
+			DB.deleteNode(target);
 		end
 	end
 
 	-- Clear the flag element
 	local flag = node.getChild("hasStoredTargets");
+	Debug.chat('flag', flag);
 	if flag then
-		flag.delete();
+		DB.deleteNode(flag);
 	end
 end
 

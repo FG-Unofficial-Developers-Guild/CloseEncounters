@@ -6,12 +6,13 @@
 -->
 
 <root>
-	<windowclass name="power_action_mini" merge="join" ruleset="5E">
-		<script file="campaign/5e/scripts/power_action_mini.lua" />
+	<windowclass name="power_action_mini" merge="join">
+		<script file="campaign/CoreRPG/scripts/power_action_mini.lua" />
 	</windowclass>
 
-	<windowclass name="power_action" merge="join" ruleset="5E">
-		<script file="campaign/5e/scripts/power_action.lua" />
+	<windowclass name="power_action_target">
+		<margins control="0,0,0,2" />
+		<script file="campaign/CoreRPG/scripts/power_action_target.lua" />
 		<sheetdata>
 			<!-- Targeting -->
 			<button_poweraction name="targetbutton">
@@ -19,10 +20,15 @@
 				<icon normal="button_targeting" pressed="button_targeting_down" />
 			</button_poweraction>
 			<label name="targetlabel">
-				<anchored to="targetbutton" position="righthigh" offset="5,0" width="60" />
-				<static textres="power_label_target_burstsize" />
+				<anchored to="targetbutton" position="righthigh" offset="5,0" width="40" />
+				<static textres="power_label_target" />
 			</label>
-			<basicnumber name="burstsize">
+			<string_poweractionview name="targetview">
+				<anchored to="targetlabel" position="righthigh" offset="10,0">
+					<right parent="" offset="-5" />
+				</anchored>
+			</string_poweractionview>
+			<!-- <basicnumber name="burstsize">
 				<anchored to="targetlabel" position="righthigh" offset="10,0" width="30" />
 			</basicnumber>
 			<label name="factionlabel">
@@ -36,9 +42,9 @@
 					<values>friend|all</values>
 					<defaultlabelres>faction_foe</defaultlabelres>
 				</parameters>
-			</button_stringcycler>
+			</button_stringcycler> -->
 
-			<list_storedtargets name="storedtargets" />
+			<!-- <list_storedtargets name="storedtargets" /> -->
 		</sheetdata>
 	</windowclass>
 </root>

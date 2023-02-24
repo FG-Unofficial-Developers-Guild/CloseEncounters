@@ -36,10 +36,10 @@
 		<script name="PowerManager5E_CE" file="scripts/manager_power_5e_ce.lua" ruleset="5E" />
 		<script name="CloseEncounters" file="scripts/targetAction.lua" />
 
-		<!-- <includefile source="campaign/PFRPG/record_char_powers_pfrpg.xml" /> -->
+		<includefile source="campaign/CoreRPG/record_powers_core.xml" />
 		<includefile source="campaign/3.5e/record_char_powers_3.5e.xml" />
 		<includefile source="campaign/4e/record_char_powers_4e.xml" />
-		<includefile source="campaign/5e/record_char_powers_5e.xml" />
+		<!-- <includefile source="campaign/5e/record_char_powers_5e.xml" /> -->
 		<includefile source="campaign/PFRPG2/record_char_powers_pfrpg2.xml" />
 		<includefile source="campaign/SFRPG/record_char_powers_sfrpg.xml" />
 
@@ -51,6 +51,7 @@
 		<string name="option_val_no">No</string>
 
 		<string name="menu_poweraddtarget">Add Target Action</string>
+		<string name="power_label_target">Target</string>
 		<string name="power_label_target_burstsize">Burst Size</string>
 		<string name="power_label_target_faction">Faction</string>
 		<string name="faction_friend">Allies</string>
