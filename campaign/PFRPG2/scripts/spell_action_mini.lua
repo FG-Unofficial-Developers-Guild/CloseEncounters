@@ -20,8 +20,9 @@ end
 -- when onInit runs sType might be empty
 -- so we attach handlers onFirstLayout instead.
 function onFirstLayout()
-	local nodeChar = DB.getChild(getDatabaseNode(), ".........");
-	local sType = DB.getValue(getDatabaseNode(), "type", "");
+	local nodeAction = getDatabaseNode();
+	local nodeChar = CloseEncounters.getActorNodeFromActionNode(nodeAction);
+	local sType = DB.getValue(nodeAction, "type", "");
 	if sType == "target" then
 		CloseEncounters.addDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
 		CloseEncounters.updateTargetIcon(nodeChar, button)
@@ -29,27 +30,36 @@ function onFirstLayout()
 end
 
 function onClose()
-	local nodeChar = DB.getChild(getDatabaseNode(), ".....");
-	local sType = DB.getValue(getDatabaseNode(), "type", "");
+	local nodeAction = getDatabaseNode();
+	local nodeChar = CloseEncounters.getActorNodeFromActionNode(nodeAction);
+	local sType = DB.getValue(nodeAction, "type", "");
+	
 	if sType == "target" then
 		CloseEncounters.removeDbHandlers(nodeChar, onStoredTargetsCreated, onStoredTargetsRemoved)
 	end
 end
 
 function onStoredTargetsCreated(node)
-	button.setIcons("button_clear", "button_clear_down");
+	if not DB.getName(node) == "hasStoredTargets" then
+		return
+	end
+	CloseEncounters.updateTargetIcon(node, button);
 end
 
 function onStoredTargetsRemoved(node)
-	button.setIcons("button_targeting", "button_targeting_down");
+	if not DB.getName(node) == "hasStoredTargets" then
+		return
+	end
+	CloseEncounters.updateTargetIcon(node, button);
 end
 
 function updateDisplay()
     fUpdateDisplay();
 
-    local sType = DB.getValue(getDatabaseNode(), "type", "");
+	local node = getDatabaseNode();
+    local sType = DB.getValue(node, "type", "");
     if sType == "target" then
-        button.setIcons("button_targeting", "button_targeting_down");
+        CloseEncounters.updateTargetIcon(node, button);
     end
 end
 

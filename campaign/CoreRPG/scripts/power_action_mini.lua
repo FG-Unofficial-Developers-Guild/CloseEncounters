@@ -2,22 +2,12 @@
 -- Please see the license.html file included with this distribution for 
 -- attribution and copyright information.
 --
-local fOnDataChanged = nil;
-
-function onInit()
-	fOnDataChanged = super.onDataChanged;
-	super.onDataChanged = onDataChanged;
-
-	if super and super.onInit then
-		super.onInit();
-	end
-end
 
 -- when onInit runs sType might be empty
 -- so we attach handlers onFirstLayout instead.
 function onFirstLayout()
 	local nodeAction = getDatabaseNode();
-	local nodeChar = DB.getChild(nodeAction, ".....");
+	local nodeChar = CloseEncounters.getActorNodeFromActionNode(getDatabaseNode());
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 
 	if sType == "target" then
@@ -32,7 +22,7 @@ function onClose()
 		super.onClose();
 	end
 
-	local nodeChar = DB.getChild(getDatabaseNode(), ".....");
+	local nodeChar = CloseEncounters.getActorNodeFromActionNode(getDatabaseNode());
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 
 	if sType == "target" then
@@ -41,16 +31,15 @@ function onClose()
 end
 
 function onStoredTargetsCreated(node)
-	Debug.chat('onStoredTargetsCreated()');
-	button.setIcons("button_clear", "button_clear_down");
+	if not DB.getName(node) == "hasStoredTargets" then
+		return
+	end
+	CloseEncounters.updateTargetIcon(node, button);
 end
 
 function onStoredTargetsRemoved(node)
-	Debug.chat('onStoredTargetsRemoved()');
-	button.setIcons("button_targeting", "button_targeting_down");
-end
-
-function onDataChanged()
-	Debug.chat('onDataChanged()');
-	fOnDataChanged();
+	if not DB.getName(node) == "hasStoredTargets" then
+		return
+	end
+	CloseEncounters.updateTargetIcon(node, button);
 end

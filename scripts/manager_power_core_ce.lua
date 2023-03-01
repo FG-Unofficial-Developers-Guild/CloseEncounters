@@ -9,7 +9,7 @@ function onInit()
 		fnGetButtonIcons = getActionButtonIcons,
 		fnGetText = getActionText,
 		fnGetTooltip = getActionTooltip,
-		fnPerform = CloseEncounters.performAction, -- I don't understand why this function isn't getting called
+		fnPerform = CloseEncounters.performAction,
 	};
 
 	PowerActionManagerCore.registerActionType("target", tTargetActionHandlers);
@@ -21,16 +21,14 @@ end
 
 function getActionButtonIcons(node, tData)
 	if tData.sType == "target" then
-		return "button_action_resource", "button_action_resource_down";
+		return CloseEncounters.getActionButtonIcon(node);
 	end
 	return "", "";
 end
 
 function getActionText(node, tData)
 	if tData.sType == "target" then
-        local size = DB.getValue(node, "burstsize", 0);
-        local faction = DB.getValue(node, "targetfaction", "");
-        return CloseEncounters.getActionText(faction, size);
+        return CloseEncounters.getActionText(node);
     end
 	return "";
 end
