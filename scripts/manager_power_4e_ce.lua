@@ -3,50 +3,20 @@
 --
 -- 4e stuff
 local fGetPowerAbilityString;
-local fOnPowerAbilityAction
 
 function onInit()
 	fGetPowerAbilityString = PowerManager.getPowerAbilityString;
 	PowerManager.getPowerAbilityString = getPowerAbilityString;
-
-	fOnPowerAbilityAction = CharManager.onPowerAbilityAction;
-	CharManager.onPowerAbilityAction = onPowerAbilityAction;
 end
 
--- PERFORM ACTION 4E
 function getPowerAbilityString(sType, nodeAbility)
-	local s = fGetPowerAbilityString(sType, nodeAbility);
+	local s = "";
 
-	if sType == "target" then
-		local size = DB.getValue(nodeAbility, "burstsize", 0);
-		local faction = DB.getValue(nodeAbility, "targetfaction", "");
-		
-		s = CloseEncounters.getActionText(faction, size)
+	if sType == "target" then		
+		s = CloseEncounters.getActionText(nodeAbility)
+	else
+		s = fGetPowerAbilityString(sType, nodeAbility);
 	end
 
 	return s;
-end
-
-function onPowerAbilityAction(draginfo, nodeAbility, subtype)
-	-- if the original runs, then return true;
-	if fOnPowerAbilityAction(draginfo, nodeAbility, subtype) then
-		return true;
-	end
-
-	local sAbilityType = DB.getValue(nodeAbility, "type", "");
-	if sAbilityType == "target" then
-		local rActor = ActorManager.resolveActor(nodeAbility.getChild("....."))
-		local rSourceNode = DB.findNode(rActor.sCreatureNode)
-		local nodeCT = CombatManager.getCTFromNode(nodeAbility.getChild("....."));
-		local nDistance = DB.getValue(nodeAbility, "burstsize", 0);
-		local sFaction = DB.getValue(nodeAbility, "targetfaction", "foe");
-		if sFaction == '' then
-			sFaction = "foe";
-		end
-
-		CloseEncounters.toggleTargeting(rActor, nDistance, sFaction);
-		return true;
-	end	
-
-	return false;
 end

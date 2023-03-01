@@ -3,7 +3,7 @@
 <root release="3.3.3" version="3.3.3">
 	<properties>
 		<name>Feature: Close Encounters</name>
-		<version>1.1.6</version>
+		<version>2.0.0</version>
 		<author>Saagael</author>
 		<description>Adds a target action to powers that allows easy targeting of creatures in a close burst.</description>
 		<loadorder>100</loadorder>
@@ -30,27 +30,31 @@
 		<icon name="CloseEncounters" file="CloseEncounters.png" />
 
 		<script name="Options_CE" file="scripts/data_options_CE.lua" />
-		<script name="SpellManager3.5E_CE" file="scripts/manager_spell_3.5e_ce.lua" ruleset="3.5E|PFRPG|SFRPG" />
+		<script name="CloseEncounters" file="scripts/close_encounters.lua" />
+		<script name="PowerManagerCore_CE" file="scripts/manager_power_core_ce.lua" />
+
 		<script name="SpellManagerPFRPG2_CE" file="scripts/manager_spell_pfrpg2_ce.lua" ruleset="PFRPG2" />
 		<script name="PowerManager4E_CE" file="scripts/manager_power_4e_ce.lua" ruleset="4E" />
-		<script name="PowerManager5E_CE" file="scripts/manager_power_5e_ce.lua" ruleset="5E" />
-		<script name="CloseEncounters" file="scripts/targetAction.lua" />
 
-		<!-- <includefile source="campaign/PFRPG/record_char_powers_pfrpg.xml" /> -->
-		<includefile source="campaign/3.5e/record_char_powers_3.5e.xml" />
-		<includefile source="campaign/4e/record_char_powers_4e.xml" />
-		<includefile source="campaign/5e/record_char_powers_5e.xml" />
+		<includefile source="campaign/CoreRPG/record_powers_core.xml" />
+		<includefile source="campaign/CoreRPG/record_power_editor_core.xml" />
 		<includefile source="campaign/PFRPG2/record_char_powers_pfrpg2.xml" />
-		<includefile source="campaign/SFRPG/record_char_powers_sfrpg.xml" />
 
 		<includefile source="campaign/common.xml"/>
+
+
+		<icon name="radial_power_action_target" file="graphics/radial/icon_image_layer_pointer_square.png" />
+		<string name="power_menu_extraactions">More Actions</string>
+		<string name="power_menu_action_add_target">Add Target Action</string>
 
 		<string name="option_header_ce">Extension: Close Encounters</string>
 		<string name="option_label_CE_RTET">Restore targets at end of turn</string>
 		<string name="option_val_yes">Yes</string>
 		<string name="option_val_no">No</string>
 
-		<string name="menu_poweraddtarget">Add Target Action</string>
+		<string name="power_header_targeting">Targeting</string>
+
+		<string name="power_label_target">Target</string>
 		<string name="power_label_target_burstsize">Burst Size</string>
 		<string name="power_label_target_faction">Faction</string>
 		<string name="faction_friend">Allies</string>
@@ -58,5 +62,5 @@
 		<string name="faction_all">All</string>
 	</base>
 
-	<announcement text="Loaded Close Encounters v1.1.6 by Saagael" icon="CloseEncounters" font="emotefont" />
+	<announcement text="Loaded Close Encounters v2.0.0 by Saagael" icon="CloseEncounters" font="emotefont" />
 </root>

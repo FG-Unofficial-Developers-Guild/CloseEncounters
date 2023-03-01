@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<windowclass name="power_action_editor_target">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="name_label">
+				<static textres="power_label_name" />
+			</label_column>
+			<stringc_column name="name" />
+
+			<header_column name="header_targeting">
+				<static textres="power_header_targeting" />
+				<center />
+			</header_column>
+
+			<label_column name="burstsize_label">
+				<static textres="power_label_target_burstsize" />
+			</label_column>
+			<number_column name="burstsize">
+				<min>0</min>
+			</number_column>
+
+			<label_column name="faction_label">
+				<static textres="power_label_target_faction" />
+			</label_column>
+			<button_stringcycler name="faction">
+				<anchored width="60" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="97" />
+				</anchored>
+				<parameters>
+					<labelsres>faction_friend|faction_all</labelsres>
+					<values>friend|all</values>
+					<defaultlabelres>faction_foe</defaultlabelres>
+				</parameters>
+			</button_stringcycler>
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="power_action_mini" merge="join">
+		<script file="campaign/CoreRPG/scripts/power_action_mini.lua" />
+	</windowclass>
+
+	<windowclass name="power_action_target">
+		<margins control="0,0,0,2" />
+		<script file="campaign/CoreRPG/scripts/power_action_target.lua" />
+		<sheetdata>
+			<!-- Targeting -->
+			<button_poweraction name="targetbutton">
+				<anchored position="insidetopleft" offset="2,2" />
+				<icon normal="button_targeting" pressed="button_targeting_down" />
+			</button_poweraction>
+			<label name="targetlabel">
+				<anchored to="targetbutton" position="righthigh" offset="5,0" width="40" />
+				<static textres="power_label_target" />
+			</label>
+			<string_poweractionview name="targetview">
+				<anchored to="targetlabel" position="righthigh" offset="10,0">
+					<right parent="" offset="-5" />
+				</anchored>
+			</string_poweractionview>
+
+			<!-- <list_storedtargets name="storedtargets" /> -->
+		</sheetdata>
+	</windowclass>
+</root>
