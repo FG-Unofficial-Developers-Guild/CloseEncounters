@@ -3,7 +3,7 @@
 <root release="3.3.3" version="3.3.3">
 	<properties>
 		<name>Feature: Close Encounters</name>
-		<version>2.0.0</version>
+		<version>2.0.2</version>
 		<author>Saagael</author>
 		<description>Adds a target action to powers that allows easy targeting of creatures in a close burst.</description>
 		<loadorder>100</loadorder>
@@ -62,5 +62,5 @@
 		<string name="faction_all">All</string>
 	</base>
 
-	<announcement text="Loaded Close Encounters v2.0.0 by Saagael" icon="CloseEncounters" font="emotefont" />
+	<announcement text="Loaded Close Encounters v2.0.2 by Saagael" icon="CloseEncounters" font="emotefont" />
 </root>
