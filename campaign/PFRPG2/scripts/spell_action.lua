@@ -60,7 +60,7 @@ function createDisplay(sType)
         createControl("spell_action_targetlabel", "targetlabel");
         createControl("spell_action_burstsize", "burstsize");
         createControl("spell_action_factionlabel", "factionlabel");
-        createControl("spell_action_targetfaction", "targetfaction");
+        createControl("spell_action_faction", "faction");
         createControl("list_storedtargets", "storedtargets");
     end
 end

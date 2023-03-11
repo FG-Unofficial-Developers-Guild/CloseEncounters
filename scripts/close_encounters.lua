@@ -59,7 +59,7 @@ end
 ------------------ POWER MANAGER ---------------------------
 function performAction(node, tData)
 	local size = DB.getValue(node, "burstsize", 0);
-	local faction = DB.getValue(node, "targetfaction", "");
+	local faction = DB.getValue(node, "faction", "");
 
 	-- Empty faction is mapped to enemies
 	if faction == "" then
@@ -99,7 +99,8 @@ end
 
 function getActionText(actionNode)
 	local size = DB.getValue(actionNode, "burstsize", 0);	
-	local faction = DB.getValue(actionNode, "targetfaction", "");
+	local faction = DB.getValue(actionNode, "faction", "");
+	Debug.chat('getActionText()', size, faction);
 
 	local sFaction = "enemies";
 	if faction == "friend" then

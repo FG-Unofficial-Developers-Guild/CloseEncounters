@@ -70,7 +70,7 @@ function updateViews()
     if sType == "target" then
         local node = getDatabaseNode();
         local size = DB.getValue(node, "burstsize", 0);
-        local faction = DB.getValue(node, "targetfaction", "");
+        local faction = DB.getValue(node, "faction", "");
         button.setTooltipText(CloseEncounters.getActionText(faction, size));
     end
 end

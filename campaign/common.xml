@@ -8,7 +8,7 @@
 <root>
     <template name="list_storedtargets" ruleset="4E|5E">
         <windowlist name="storedtargets">
-			<anchored to="targetfaction" position="righthigh" offset="5,-2">
+			<anchored to="faction" position="righthigh" offset="5,-2">
 				<right parent="" anchor="right" offset="-10" />
 			</anchored>
             <class>token_storedtarget</class>
@@ -20,7 +20,7 @@
     </template>
 	<template name="list_storedtargets" ruleset="3.5E|PFRPG|PFRPG2|SFRPG">
         <windowlist name="storedtargets">
-			<anchored to="targetfaction" position="righthigh" offset="5,-2">
+			<anchored to="faction" position="righthigh" offset="5,-2">
 				<right parent="" anchor="right" offset="-10" />
 			</anchored>
             <class>token_storedtarget</class>
@@ -90,8 +90,8 @@
 			<static textres="power_label_target_faction" />
 		</label>
 	</template>
-	<template name="spell_action_targetfaction">
-		<button_stringcycler name="targetfaction">
+	<template name="spell_action_faction">
+		<button_stringcycler name="faction">
 			<anchored to="factionlabel" position="righthigh" offset="5,0" width="60" />
 			<parameters>
 				<labelsres>faction_friend|faction_all</labelsres>

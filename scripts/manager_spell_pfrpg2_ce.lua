@@ -19,7 +19,7 @@ end
 function getActionTargetText(nodeAction)
     local nodeActor = nodeAction.getChild(".........")
     local size = DB.getValue(nodeAction, "burstsize", 0);
-	local faction = DB.getValue(nodeAction, "targetfaction", "");
+	local faction = DB.getValue(nodeAction, "faction", "");
 	return CloseEncounters.getActionText(faction, size)
 end
 
@@ -54,7 +54,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
         rAction.label = DB.getValue(nodeAction, "...name", "");
         rAction.order = SpellManager.getSpellActionOutputOrder(nodeAction);
         rAction.nSize = DB.getValue(nodeAction, "burstsize", "0");
-		rAction.sFaction = DB.getValue(nodeAction, "targetfaction", "foe");
+		rAction.sFaction = DB.getValue(nodeAction, "faction", "foe");
 		if rAction.sFaction == '' then
 			rAction.sFaction = "foe";
 		end
