@@ -100,7 +100,6 @@ end
 function getActionText(actionNode)
 	local size = DB.getValue(actionNode, "burstsize", 0);	
 	local faction = DB.getValue(actionNode, "faction", "");
-	Debug.chat('getActionText()', size, faction);
 
 	local sFaction = "enemies";
 	if faction == "friend" then
