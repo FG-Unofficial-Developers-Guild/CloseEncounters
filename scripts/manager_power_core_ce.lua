@@ -40,6 +40,10 @@ end
 --------------------------------------------------------------------
 -- MAKING RADIAL MENUS WORKABLE. TAKEN FROM CAPITAL GAINS
 --------------------------------------------------------------------
+function calcNextActionTypeOrder()
+	return #PowerActionManagerCore.getSortedActionTypes();
+end
+
 function registerDefaultPowerMenu(w)
     registerDefaultPowerMenuOriginal(w);
     local aSubMenus = { 3 };
