@@ -1,8 +1,13 @@
 -- Extension of CoreRPG's PowerManager
+local registerDefaultPowerMenuOriginal;
+local onDefaultPowerMenuSelectionOriginal;
 
 function onInit()
 	PowerActionManagerCore.calcNextActionTypeOrder = calcNextActionTypeOrder;
+	registerDefaultPowerMenuOriginal = PowerManagerCore.registerDefaultPowerMenu;
 	PowerManagerCore.registerDefaultPowerMenu = registerDefaultPowerMenu;
+
+	onDefaultPowerMenuSelectionOriginal = PowerManagerCore.onDefaultPowerMenuSelection;
 	PowerManagerCore.onDefaultPowerMenuSelection = onDefaultPowerMenuSelection;
 
 	local tTargetActionHandlers = {
